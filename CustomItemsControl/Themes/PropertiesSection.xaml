@@ -1,0 +1,28 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:customItemsControl="using:CustomItemsControl">
+    <Style TargetType="customItemsControl:PropertiesSection">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="customItemsControl:PropertiesSection">
+                    <StackPanel>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="NoTitle">
+                                    <VisualState.Setters>
+                                        <Setter Target="headerText.Visibility" Value="Collapsed" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <TextBlock x:Name="headerText" Text="{TemplateBinding SectionName}" FontSize="14"
+                                   FontWeight="Bold" Margin="0,8" />
+                        <ContentPresenter Content="{TemplateBinding Content}" />
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

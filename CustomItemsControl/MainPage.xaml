@@ -6,21 +6,25 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignWidth="315"
     d:DesignHeight="300"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <local:PropertiesContainer>
-        <local:PropertiesSection SectionName="First">
+    Width="315"
+    >
+    <Page.Resources>
+        <SolidColorBrush x:Key="BackgroundBrush" Color="Gray" />
+    </Page.Resources>
+    <local:PropertiesContainer Background="{StaticResource BackgroundBrush}">
+        <local:PropertiesSection SectionName="First" Background="Transparent">
             <TextBlock>első</TextBlock>
         </local:PropertiesSection>
         <local:PropertiesSection SectionName="" >
             <TextBlock>második</TextBlock>
         </local:PropertiesSection>
-        <local:PropertiesSection x:Name="ThirdSection" SectionName="Third" x:Load="{x:Bind IsLoadedTest, Mode=OneWay}">
+        <local:PropertiesSection x:Name="ThirdSection" SectionName="Third" x:Load="{x:Bind Test1, Mode=OneWay}">
             <TextBlock>harmadik</TextBlock>
         </local:PropertiesSection>
-        <local:PropertiesSection x:Name="last" SectionName="Fourth" x:Load="{x:Bind IsVisibleTest, Mode=OneWay}">
+        <local:PropertiesSection x:Name="last" SectionName="Fourth"  x:Load="{x:Bind Test2, Mode=OneWay}" >
             <TextBlock>negyedik</TextBlock>
         </local:PropertiesSection>
+        <TextBlock Text="Otodik TextBlock" Visibility="{x:Bind Test3, Mode=OneWay}" />
     </local:PropertiesContainer>
 </Page>

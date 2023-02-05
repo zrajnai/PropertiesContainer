@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using Windows.Foundation.Collections;
+﻿using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -8,6 +6,13 @@ namespace CustomItemsControl
 {
     public class PropertiesContainer : ItemsControl
     {
+        public PropertiesContainer()
+        {
+            DefaultStyleKey = typeof(PropertiesContainer);
+
+            Items!.VectorChanged += ItemsOnVectorChanged;
+        }
+
         protected override DependencyObject GetContainerForItemOverride()
         {
             return new PropertiesSectionContainer();
@@ -20,65 +25,51 @@ namespace CustomItemsControl
 
         protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
         {
-            if (element is not PropertiesSectionContainer propertiesSectionContainer ||
-                item is not PropertiesSection propertiesSection)
+            if (element is not PropertiesSectionContainer propertiesSectionContainer)
             {
                 return;
             }
 
-            propertiesSectionContainer.Content = propertiesSection.Content;
-            propertiesSectionContainer.SectionName = propertiesSection.SectionName;
+            propertiesSectionContainer.Content = item;
             propertiesSectionContainer.ApplyTemplate();
+
+            (item as FrameworkElement)?.RegisterPropertyChangedCallback(VisibilityProperty, (_, _) => UpdateVisualStates());
 
             UpdateVisualStates();
         }
 
         private void UpdateVisualStates()
         {
-            foreach (var item in Items!.OfType<PropertiesSection>())
+            if (Items!.Count == 0)
             {
-                var container = (Control)ItemContainerGenerator.ContainerFromItem(item);
-                if (container is null)
+                return;
+            }
+
+            PropertiesSectionContainer lastVisibleContainer = null;
+            for (var index = 0; index <= Items.Count - 1; index++)
+            {
+                if (ContainerFromIndex(index) is not PropertiesSectionContainer container)
                     continue;
-                VisualStateManager.GoToState(container, "Normal", false);
 
-                if (string.IsNullOrWhiteSpace(item.SectionName))
+                var isContentVisible = (container.Content as UIElement)?.Visibility == Visibility.Visible;
+                var shouldHideSeparator = index == Items.Count - 1 || !isContentVisible;
+
+                if (isContentVisible)
                 {
-                    VisualStateManager.GoToState(container, "NoTitle", false);
+                    lastVisibleContainer = container;
                 }
+                VisualStateManager.GoToState(container, shouldHideSeparator ? "LastItem" : "Normal", false);
             }
 
-            var lastItem = Items.OfType<PropertiesSection>().LastOrDefault();
-            if (lastItem is not null)
+            if (lastVisibleContainer is not null)
             {
-                var container = (Control)ItemContainerGenerator.ContainerFromItem(lastItem);
-                if (container is not null)
-                {
-                    VisualStateManager.GoToState(container, "LastItem", false);
-                }
+                VisualStateManager.GoToState(lastVisibleContainer, "LastItem", false);
             }
-        }
-
-        public PropertiesContainer()
-        {
-            DefaultStyleKey = typeof(PropertiesContainer);
-
-            Items!.VectorChanged += ItemsOnVectorChanged;
         }
 
         private void ItemsOnVectorChanged(IObservableVector<object> sender, IVectorChangedEventArgs @event)
         {
             UpdateVisualStates();
-            ;
-            if (@event.CollectionChange != CollectionChange.ItemInserted)
-            {
-                return;
-            }
-            if (!(sender?[(int)@event.Index] is PropertiesSection))
-            {
-                throw new ApplicationException();
-            }
-
         }
     }
 }

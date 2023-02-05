@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="ms-appx:///Themes/PropertySection.xaml" />
+        <ResourceDictionary Source="ms-appx:///Themes/PropertiesSection.xaml" />
+        <ResourceDictionary Source="ms-appx:///Themes/PropertiesSectionContainer.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

@@ -12,7 +12,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="customItemsControl:PropertiesSectionContainer">
-                    <StackPanel>
+                    <StackPanel Background="{TemplateBinding Background}">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
@@ -22,16 +22,7 @@
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
-                            <VisualStateGroup x:Name="UnCommonStates">
-                                <VisualState x:Name="NoTitle">
-                                    <VisualState.Setters>
-                                        <Setter Target="headerText.Visibility" Value="Collapsed" />
-                                    </VisualState.Setters>
-
-                                </VisualState>
-                            </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <TextBlock x:Name="headerText" Text="{TemplateBinding SectionName}" FontSize="14" FontWeight="Bold" Margin="0,8"/>
                         <ContentPresenter Content="{TemplateBinding Content}"/>
                         <Rectangle x:Name="separator" Margin="0,8" Style="{StaticResource SeparatorRectangle}" />
                     </StackPanel>

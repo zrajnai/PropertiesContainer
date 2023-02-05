@@ -1,0 +1,42 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:customItemsControl="using:CustomItemsControl">
+    <Style x:Key="SeparatorRectangle" TargetType="Rectangle">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Height" Value="1" />
+        <Setter Property="Margin" Value="12,4,12,8" />
+        <Setter Property="Fill" Value="{ThemeResource SystemControlBackgroundBaseLowBrush}" />
+    </Style>
+    <Style TargetType="customItemsControl:PropertiesSectionContainer">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="customItemsControl:PropertiesSectionContainer">
+                    <StackPanel>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="LastItem">
+                                    <VisualState.Setters>
+                                        <Setter Target="separator.Visibility" Value="Collapsed" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="UnCommonStates">
+                                <VisualState x:Name="NoTitle">
+                                    <VisualState.Setters>
+                                        <Setter Target="headerText.Visibility" Value="Collapsed" />
+                                    </VisualState.Setters>
+
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <TextBlock x:Name="headerText" Text="{TemplateBinding SectionName}" FontSize="14" FontWeight="Bold" Margin="0,8"/>
+                        <ContentPresenter Content="{TemplateBinding Content}"/>
+                        <Rectangle x:Name="separator" Margin="0,8" Style="{StaticResource SeparatorRectangle}" />
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

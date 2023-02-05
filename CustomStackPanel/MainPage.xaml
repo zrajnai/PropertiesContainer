@@ -1,0 +1,25 @@
+﻿<Page
+    x:Class="CustomStackPanel.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CustomStackPanel"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignWidth="320" d:DesignHeight="500"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <local:PropertiesPanel>
+        <local:PropertiesSection SectionName="First">
+            <TextBlock>első</TextBlock>
+        </local:PropertiesSection>
+        <local:PropertiesSection SectionName="" >
+            <TextBlock>második</TextBlock>
+        </local:PropertiesSection>
+        <local:PropertiesSection x:Name="ThirdSection" SectionName="Third" x:Load="{x:Bind IsLoadedTest, Mode=OneWay}">
+            <TextBlock>harmadik</TextBlock>
+        </local:PropertiesSection>
+        <local:PropertiesSection x:Name="last" SectionName="Fourth" Visibility="{x:Bind IsVisibleTest, Mode=OneWay}">
+            <TextBlock>negyedik</TextBlock>
+        </local:PropertiesSection>
+    </local:PropertiesPanel>
+</Page>
